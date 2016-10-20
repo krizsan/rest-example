@@ -21,8 +21,20 @@ public class Drawing extends LongIdEntity {
     @Column(name = "creationDate", nullable = false)
     protected Date creationDate;
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "shapeId", referencedColumnName = "id")
+    @JoinTable(
+        name = "DrawingShapes",
+        joinColumns = { @JoinColumn(name = "drawing_id") },
+        inverseJoinColumns = { @JoinColumn(name = "shape_id") })
     protected Set<Shape> shapes = new HashSet<>();
+
+    /**
+     * Adds the supplied shape to the drawing.
+     *
+     * @param inShape Shape to add to drawing.
+     */
+    public void addShape(final Shape inShape) {
+        shapes.add(inShape);
+    }
 
     public String getName() {
         return name;

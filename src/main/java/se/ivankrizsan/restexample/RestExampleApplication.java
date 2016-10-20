@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * Example application main class entrypoint.
+ * Example application main class entry-point.
  *
  * @author Ivan Krizsan
  */

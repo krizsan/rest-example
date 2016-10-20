@@ -117,8 +117,9 @@ public abstract class RestResourceBase<E extends LongIdEntity> {
     @Path("{id}")
     public void updateEntity(@Suspended final AsyncResponse inAsyncResponse, final E inEntity,
         @PathParam("id") @NotNull final Long inEntityId) {
+
         inEntity.setId(inEntityId);
-        mService.save(inEntity).subscribe(
+        mService.update(inEntity).subscribe(
             inResult -> inAsyncResponse.resume(Response.ok(inResult).build()),
             inError -> inAsyncResponse.resume(
                 Response.

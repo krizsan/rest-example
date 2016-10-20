@@ -1,7 +1,11 @@
 package se.ivankrizsan.restexample.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.awt.*;
 
 /**
@@ -10,6 +14,9 @@ import java.awt.*;
  * @author Ivan Krizsan
  */
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+/* Json type info style, using fully qualified class names, is not optimal from a security point of view. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public abstract class Shape extends LongIdEntity {
     /* Constant(s): */
 

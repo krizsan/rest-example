@@ -2,8 +2,8 @@ package se.ivankrizsan.restexample.services;
 
 import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
+import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,7 +20,7 @@ public abstract class AbstractServiceBase<E extends LongIdEntity> {
     /* Constant(s): */
 
     /* Instance variable(s): */
-    protected CrudRepository<E, Long> mRepository;
+    protected JpaRepositoryCustomisations<E> mRepository;
     @Autowired
     protected EntityManager mEntityManager;
 
@@ -29,7 +29,7 @@ public abstract class AbstractServiceBase<E extends LongIdEntity> {
      *
      * @param inRepository Entity repository.
      */
-    public AbstractServiceBase(final CrudRepository<E, Long> inRepository) {
+    public AbstractServiceBase(final JpaRepositoryCustomisations<E> inRepository) {
         mRepository = inRepository;
     }
 
@@ -60,11 +60,7 @@ public abstract class AbstractServiceBase<E extends LongIdEntity> {
     public Observable<E> update(final E inEntity) {
         return Observable.create(inSource -> {
             try {
-                E theEntityToUpdate = inEntity;
-                if (mRepository.exists(theEntityToUpdate.getId())) {
-                    theEntityToUpdate = mEntityManager.merge(theEntityToUpdate);
-                }
-                final E theUpdatedEntity = mRepository.save(theEntityToUpdate);
+                final E theUpdatedEntity = mRepository.persist(inEntity);
                 inSource.onNext(theUpdatedEntity);
                 inSource.onComplete();
             } catch (final Exception theException) {

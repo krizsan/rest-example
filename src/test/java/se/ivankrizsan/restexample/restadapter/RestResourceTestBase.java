@@ -3,6 +3,7 @@ package se.ivankrizsan.restexample.restadapter;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
@@ -13,6 +14,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.helpers.EntityFactory;
 import se.ivankrizsan.restexample.helpers.JsonConverter;
+import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
 import java.io.IOException;
 
@@ -23,6 +25,8 @@ import java.io.IOException;
  *
  * @author Ivan Krizsan
  */
+@EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
+    repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     AbstractTestNGSpringContextTests {
     /* Constant(s): */
@@ -189,5 +193,28 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
         final Object theUpdatedEntity = JsonConverter.jsonToObject(theResponseJson, mExpectedEntity.getClass());
         ReflectionAssert.assertLenientEquals("Updated entity should have the correct property values",
             theExpectedEntity, theUpdatedEntity);
+    }
+
+    /**
+     * Tests updating an entity that has not previously been persisted.
+     *
+     * @throws Exception If error occurs. Indicates test failure.
+     */
+    @Test(timeOut = TEST_TIMEOUT)
+    public void testUpdateEntityNotPersisted() throws Exception {
+        final E theExpectedEntity = mEntityFactory.createEntity(mCreateEntityIndex + 1);
+        final String theJsonRepresentation = JsonConverter.objectToJson(theExpectedEntity);
+        final Response theResponse = RestAssured.
+            given().
+            contentType("application/json").
+            accept("application/json").
+            body(theJsonRepresentation).
+            when().
+            put(mResourceUrlPath + "/" + mExpectedEntity.getId() + 1);
+        final String theResponseJson = theResponse.prettyPrint();
+        theResponse.
+            then().
+            statusCode(500).
+            contentType(ContentType.TEXT);
     }
 }

@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Component
 @Path(RectangleResource.PATH)
-@Produces({MediaType.APPLICATION_JSON })
+@Produces({MediaType.APPLICATION_JSON})
 public class RectangleResource extends RestResourceBase<Rectangle> {
     /* Constant(s): */
     public final static String PATH = "/rectangle";

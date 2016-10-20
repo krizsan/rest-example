@@ -13,8 +13,8 @@ import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustom
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public class RestExampleApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
 }

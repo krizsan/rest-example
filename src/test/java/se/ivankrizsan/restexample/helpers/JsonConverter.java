@@ -37,12 +37,6 @@ public final class JsonConverter {
 
     /**
      * Creates an object of supplied type from supplied JSON string.
-     *
-     * @param inJsonRepresentation
-     * @param inDestinationType
-     * @param <T>
-     * @return
-     * @throws IOException
      */
     public static <T> T jsonToObject(final String inJsonRepresentation, final Class<T> inDestinationType)
         throws IOException {

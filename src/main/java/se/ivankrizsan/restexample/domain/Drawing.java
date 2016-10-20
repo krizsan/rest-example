@@ -23,8 +23,8 @@ public class Drawing extends LongIdEntity {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinTable(
         name = "DrawingShapes",
-        joinColumns = { @JoinColumn(name = "drawing_id") },
-        inverseJoinColumns = { @JoinColumn(name = "shape_id") })
+        joinColumns = {@JoinColumn(name = "drawing_id")},
+        inverseJoinColumns = {@JoinColumn(name = "shape_id")})
     protected Set<Shape> shapes = new HashSet<>();
 
     /**

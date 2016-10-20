@@ -9,8 +9,8 @@ import javax.persistence.EntityManager;
 /**
  * This class implements the Spring Data JPA repository customisations.
  *
- * @author Ivan Krizsan
  * @param <T> Entity type.
+ * @author Ivan Krizsan
  */
 public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, Long> implements
     JpaRepositoryCustomisations<T> {
@@ -45,7 +45,7 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
     @Override
     public T persist(final T inEntity) {
         T theSavedEntity = inEntity;
-        final Long theEntityId = ((LongIdEntity)theSavedEntity).getId();
+        final Long theEntityId = ((LongIdEntity) theSavedEntity).getId();
         if ((theEntityId != null) && exists(theEntityId)) {
             theSavedEntity = mEntityManager.merge(inEntity);
         } else {

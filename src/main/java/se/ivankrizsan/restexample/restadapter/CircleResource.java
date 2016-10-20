@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Component
 @Path(CircleResource.PATH)
-@Produces({MediaType.APPLICATION_JSON })
+@Produces({MediaType.APPLICATION_JSON})
 public class CircleResource extends RestResourceBase<Circle> {
     /* Constant(s): */
     public final static String PATH = "/circle";

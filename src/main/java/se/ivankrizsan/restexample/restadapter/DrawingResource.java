@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Component
 @Path(DrawingResource.PATH)
-@Produces({MediaType.APPLICATION_JSON })
+@Produces({MediaType.APPLICATION_JSON})
 public class DrawingResource extends RestResourceBase<Drawing> {
     /* Constant(s): */
     public final static String PATH = "/drawing";

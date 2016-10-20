@@ -9,8 +9,8 @@ import javax.persistence.LockModeType;
 /**
  * Interface defining custom method(s) added to all the Spring Data JPA repositories in the application.
  *
- * @author Ivan Krizsan
  * @param <T> Entity type.
+ * @author Ivan Krizsan
  */
 @NoRepositoryBean
 public interface JpaRepositoryCustomisations<T> extends JpaRepository<T, Long> {

@@ -13,13 +13,13 @@ import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustom
  * @author Ivan Krizsan
  */
 @SpringBootApplication
-@EntityScan(basePackages = { "se.ivankrizsan.restexample.domain" })
+@EntityScan(basePackages = {"se.ivankrizsan.restexample.domain"})
 @EnableAsync
 @EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
-	repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
+    repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public class RestExampleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RestExampleApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RestExampleApplication.class, args);
+    }
 }

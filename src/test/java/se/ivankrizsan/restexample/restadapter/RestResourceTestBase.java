@@ -158,7 +158,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             statusCode(200).
             contentType(ContentType.JSON);
 
-        final LongIdEntity theCreatedEntity = JsonConverter.jsonToObject(theCreatedEntityJson, theExpectedEntity.getClass());
+        final LongIdEntity theCreatedEntity =
+            JsonConverter.jsonToObject(theCreatedEntityJson, theExpectedEntity.getClass());
         /* Id will be null in new entity, need to set id so comparision do not fail due to this. */
         theExpectedEntity.setId(theCreatedEntity.getId());
         ReflectionAssert.assertLenientEquals("Created entity should have the correct property values",

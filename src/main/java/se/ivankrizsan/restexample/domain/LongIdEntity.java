@@ -13,7 +13,7 @@ public abstract class LongIdEntity {
 
     /* Instance variable(s): */
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", unique = true, nullable = false)
     protected Long id;
 

@@ -198,11 +198,14 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
 
     /**
      * Tests updating an entity that has not previously been persisted.
+     * The update should fail and no entity should be persisted.
      *
      * @throws Exception If error occurs. Indicates test failure.
      */
     @Test(timeOut = TEST_TIMEOUT)
     public void testUpdateEntityNotPersisted() throws Exception {
+        final long theEntityCountBefore = mEntityRepository.count();
+
         final E theExpectedEntity = mEntityFactory.createEntity(mCreateEntityIndex + 1);
         final String theJsonRepresentation = JsonConverter.objectToJson(theExpectedEntity);
         final Response theResponse = RestAssured.
@@ -212,10 +215,12 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             body(theJsonRepresentation).
             when().
             put(mResourceUrlPath + "/" + mExpectedEntity.getId() + 1);
-        final String theResponseJson = theResponse.prettyPrint();
         theResponse.
             then().
             statusCode(500).
             contentType(ContentType.TEXT);
+
+        final long theEntityCountAfter = mEntityRepository.count();
+        Assert.assertEquals(theEntityCountAfter, theEntityCountBefore, "Number of entities should be unchanged");
     }
 }

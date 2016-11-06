@@ -6,7 +6,7 @@ import se.ivankrizsan.restexample.domain.Shape;
 import java.util.Date;
 
 /**
- * Entity factory that creates {@code Drawing}s.
+ * Entity factory that creates {@code Drawing} instances.
  *
  * @author Ivan Krizsan
  */

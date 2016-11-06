@@ -14,7 +14,7 @@ public abstract class LongIdEntity {
     /* Instance variable(s): */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
+    @Column(name = "id")
     protected Long id;
 
     public Long getId() {

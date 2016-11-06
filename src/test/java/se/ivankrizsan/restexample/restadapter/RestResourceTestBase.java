@@ -215,6 +215,7 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             body(theJsonRepresentation).
             when().
             put(mResourceUrlPath + "/" + mExpectedEntity.getId() + 1);
+
         theResponse.
             then().
             statusCode(500).

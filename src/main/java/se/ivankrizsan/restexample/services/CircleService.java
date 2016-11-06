@@ -10,7 +10,7 @@ import se.ivankrizsan.restexample.repositories.CircleRepository;
  * @author Ivan Krizsan
  */
 @Service
-public class CircleService extends AbstractServiceBase<Circle> {
+public class CircleService extends AbstractServiceBasePlain<Circle> {
 
     /**
      * Creates a mService instance that will use the supplied repository for entity persistence.

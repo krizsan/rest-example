@@ -1,9 +1,8 @@
 package se.ivankrizsan.restexample.restadapter;
 
 
-import org.springframework.transaction.annotation.Transactional;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
-import se.ivankrizsan.restexample.services.AbstractServiceBase;
+import se.ivankrizsan.restexample.services.AbstractServiceBaseRxJava;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
@@ -20,14 +19,13 @@ import javax.ws.rs.core.Response;
  * @param <E> Entity type.
  * @author Ivan Krizsan
  */
-@Transactional
 @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 @Consumes({MediaType.APPLICATION_JSON})
-public abstract class RestResourceBase<E extends LongIdEntity> {
+public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
     /* Constant(s): */
 
     /* Instance variable(s): */
-    protected AbstractServiceBase<E> mService;
+    protected AbstractServiceBaseRxJava<E> mService;
 
     /**
      * Retrieves all entities.
@@ -153,11 +151,11 @@ public abstract class RestResourceBase<E extends LongIdEntity> {
                     build()));
     }
 
-    public AbstractServiceBase<E> getService() {
+    public AbstractServiceBaseRxJava<E> getService() {
         return mService;
     }
 
-    public void setService(final AbstractServiceBase<E> inService) {
+    public void setService(final AbstractServiceBaseRxJava<E> inService) {
         mService = inService;
     }
 }

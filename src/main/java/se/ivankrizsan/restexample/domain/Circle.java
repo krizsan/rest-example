@@ -11,10 +11,11 @@ import javax.persistence.Entity;
 @Entity(name = "Circle")
 public class Circle extends Shape {
     /* Constant(s): */
+    public final static int DEFAULT_RADIUS = 10;
 
     /* Instance variable(s): */
     @Column(name = "radius", nullable = false)
-    protected int radius;
+    protected int radius = DEFAULT_RADIUS;
 
     /**
      * Default constructor.

@@ -7,6 +7,7 @@ import se.ivankrizsan.restexample.services.CircleService;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * REST resource exposing operations on circles.
@@ -16,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Component
 @Path(CircleResource.PATH)
 @Produces({MediaType.APPLICATION_JSON})
-public class CircleResource extends RestResourceBase<Circle> {
+public class CircleResource extends RestResourceBasePlain<Circle> {
     /* Constant(s): */
     public final static String PATH = "/circle";
 
@@ -27,5 +28,10 @@ public class CircleResource extends RestResourceBase<Circle> {
      */
     public CircleResource(final CircleService inService) {
         setService(inService);
+    }
+
+    @Override
+    protected Circle[] entityListToArray(final List<Circle> inEntityList) {
+        return inEntityList.toArray(new Circle[inEntityList.size()]);
     }
 }

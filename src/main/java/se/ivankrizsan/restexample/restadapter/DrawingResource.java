@@ -7,6 +7,7 @@ import se.ivankrizsan.restexample.services.DrawingService;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * REST resource exposing operations on drawings.
@@ -16,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Component
 @Path(DrawingResource.PATH)
 @Produces({MediaType.APPLICATION_JSON})
-public class DrawingResource extends RestResourceBase<Drawing> {
+public class DrawingResource extends RestResourceBasePlain<Drawing> {
     /* Constant(s): */
     public final static String PATH = "/drawing";
 
@@ -27,5 +28,10 @@ public class DrawingResource extends RestResourceBase<Drawing> {
      */
     public DrawingResource(final DrawingService inService) {
         setService(inService);
+    }
+
+    @Override
+    protected Drawing[] entityListToArray(final List<Drawing> inEntityList) {
+        return inEntityList.toArray(new Drawing[inEntityList.size()]);
     }
 }

@@ -20,6 +20,8 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
     protected EntityManager mEntityManager;
 
     /**
+     * Creates a repository instance for the entity specified by the supplied entity
+     * information that uses the supplied entity manager.
      * Constructor from superclass.
      *
      * @param inEntityInformation Entity information.
@@ -32,7 +34,9 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
     }
 
     /**
-     * Creates a repository instance for the supplied entity type that uses the supplied entity manager.
+     * Creates a repository instance for the supplied entity type that uses the
+     * supplied entity manager.
+     * Constructor from superclass.
      *
      * @param inEntityType Entity type.
      * @param inEntityManager Entity manager.

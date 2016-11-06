@@ -2,6 +2,7 @@ package se.ivankrizsan.restexample.services;
 
 import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
@@ -11,12 +12,15 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * Abstract base class for services that has operations for creating, reading updating and deleting entities.
+ * Abstract base class for services that has operations for creating, reading,
+ * updating and deleting entities.
+ * This implementation uses RxJava.
  *
  * @param <E> Entity type.
  * @author Ivan Krizsan
  */
-public abstract class AbstractServiceBase<E extends LongIdEntity> {
+@Transactional
+public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
     /* Constant(s): */
 
     /* Instance variable(s): */
@@ -29,7 +33,7 @@ public abstract class AbstractServiceBase<E extends LongIdEntity> {
      *
      * @param inRepository Entity repository.
      */
-    public AbstractServiceBase(final JpaRepositoryCustomisations<E> inRepository) {
+    public AbstractServiceBaseRxJava(final JpaRepositoryCustomisations<E> inRepository) {
         mRepository = inRepository;
     }
 

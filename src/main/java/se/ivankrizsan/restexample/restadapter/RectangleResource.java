@@ -7,6 +7,7 @@ import se.ivankrizsan.restexample.services.RectangleService;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * REST resource exposing operations on rectangles.
@@ -16,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Component
 @Path(RectangleResource.PATH)
 @Produces({MediaType.APPLICATION_JSON})
-public class RectangleResource extends RestResourceBase<Rectangle> {
+public class RectangleResource extends RestResourceBasePlain<Rectangle> {
     /* Constant(s): */
     public final static String PATH = "/rectangle";
 
@@ -27,5 +28,10 @@ public class RectangleResource extends RestResourceBase<Rectangle> {
      */
     public RectangleResource(final RectangleService inService) {
         setService(inService);
+    }
+
+    @Override
+    protected Rectangle[] entityListToArray(final List<Rectangle> inEntityList) {
+        return inEntityList.toArray(new Rectangle[inEntityList.size()]);
     }
 }

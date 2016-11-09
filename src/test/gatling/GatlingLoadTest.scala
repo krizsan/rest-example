@@ -2,6 +2,7 @@ import io.gatling.core.scenario.Simulation
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scala.concurrent.duration._
+import scala.util.Random
 
 /**
   * Gatling load test of the REST service.
@@ -10,15 +11,13 @@ import scala.concurrent.duration._
   */
 class GatlingLoadTest extends Simulation {
     /* Simulation timing and load parameters. */
-    val rampUpTimeSecs = 20
-    val testTimeSecs = 60
-    val noOfUsers = 200
-    val noOfRequestPerSeconds = 600
+    val rampUpTimeSecs = 5
+    val testTimeSecs = 20
+    val noOfUsers = 5
+    val noOfRequestPerSeconds = 100
     val minWaitMs = 20 milliseconds
     val maxWaitMs = 100 milliseconds
 
-    /* Request HTTP body contents. */
-    val requestBody = "test1"
     /* Expected response HTTP status. */
     val expectedHttpStatus = 200
 
@@ -27,15 +26,25 @@ class GatlingLoadTest extends Simulation {
     val requestName = baseName + "-request"
     val scenarioName = baseName + "-scenario"
 
+    /**
+      * Random number generator that generates random numbers in the range 0-1000 that
+      * are made available in the load-tests.
+      */
+    val randomNumberGenerator = Iterator.continually(
+        Map("RandomNumber" -> Random.nextInt(1000))
+    )
+
     val httpProtocol = http
         .baseURL(baseURL)
         .acceptHeader("application/json")
         .userAgentHeader("Gatling")
 
     val testScenario = scenario(scenarioName)
+        .feed(randomNumberGenerator)
         .during(testTimeSecs) {
             exec(http(requestName)
-                .get("/")
+                .post("/")
+                .body(ElFileBody("createRectangle.json")).asJSON
                 .check(status.is(expectedHttpStatus)))
         }
 

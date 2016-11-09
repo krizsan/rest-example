@@ -103,6 +103,7 @@
                 <version>${gatling-plugin.version}</version>
                 <configuration>
                     <simulationsFolder>${project.basedir}/src/test/gatling</simulationsFolder>
+                    <bodiesFolder>${project.basedir}/src/test/resources/gatlingpayloads</bodiesFolder>
                 </configuration>
             </plugin>
         </plugins>

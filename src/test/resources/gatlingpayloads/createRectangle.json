@@ -1,0 +1,10 @@
+{
+  "@class": "se.ivankrizsan.restexample.domain.Rectangle",
+  "colour": "Colour60",
+  "position": {
+    "x": ${RandomNumber}.0,
+    "y": ${RandomNumber}.0
+  },
+  "height": 420,
+  "width": 480
+}

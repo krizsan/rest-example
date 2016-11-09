@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(CircleResource.class);
-        register(DrawingResource.class);
-        register(RectangleResource.class);
+        /* All resource classes are to be located in the same package as this class. */
+        packages(this.getClass().getPackage().getName());
     }
 }

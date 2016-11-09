@@ -1,0 +1,34 @@
+{
+  "name": "DrawingName${RandomNumber}",
+  "creationDate": 1478725227674,
+  "shapes": [
+    {
+        "shapeType": ".Circle",
+        "colour": "Colour-${RandomNumber}",
+        "position": {
+          "x": ${RandomNumber}.0,
+          "y": ${RandomNumber}.0
+        },
+        "radius": ${RandomNumber}
+    },
+    {
+      "shapeType": ".Rectangle",
+      "colour": "Colour-${RandomNumber}",
+      "position": {
+        "x": ${RandomNumber}.0,
+        "y": ${RandomNumber}.0
+      },
+      "height": ${RandomNumber},
+      "width": ${RandomNumber}
+    },
+    {
+      "shapeType": ".Circle",
+      "colour": "Colour-${RandomNumber}",
+      "position": {
+        "x": ${RandomNumber}.0,
+        "y": ${RandomNumber}.0
+      },
+      "radius": ${RandomNumber}
+    }
+  ]
+}

@@ -15,8 +15,8 @@ import java.awt.*;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-/* Json type info style, using fully qualified class names, is not optimal from a security point of view. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+/* Need to include type information since there are collections that contain shapes. */
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "shapeType")
 public abstract class Shape extends LongIdEntity {
     /* Constant(s): */
 

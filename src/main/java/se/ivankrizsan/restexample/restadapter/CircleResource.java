@@ -19,7 +19,7 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public class CircleResource extends RestResourceBasePlain<Circle> {
     /* Constant(s): */
-    public final static String PATH = "/circle";
+    public final static String PATH = "/circles";
 
     /**
      * Creates a REST resource using the supplied service to manipulate entities.

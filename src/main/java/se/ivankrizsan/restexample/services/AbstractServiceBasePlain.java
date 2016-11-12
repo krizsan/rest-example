@@ -9,7 +9,8 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
- * Abstract base class for services that has operations for creating, reading updating and deleting entities.
+ * Abstract base class for services that has operations for creating, reading,
+ * updating and deleting entities.
  * Synchronous version.
  *
  * @param <E> Entity type.
@@ -25,7 +26,8 @@ public abstract class AbstractServiceBasePlain<E extends LongIdEntity> {
     protected EntityManager mEntityManager;
 
     /**
-     * Creates a mService instance that will use the supplied repository for entity persistence.
+     * Creates a mService instance that will use the supplied repository for
+     * entity persistence.
      *
      * @param inRepository Entity repository.
      */

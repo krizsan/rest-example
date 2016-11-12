@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>rest-example</name>
-    <description>REST example with Spring Boot, Jersey and RXJava.</description>
+    <description>REST example with Spring Boot, Jersey and RXJava</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

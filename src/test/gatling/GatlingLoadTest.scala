@@ -17,8 +17,8 @@ class GatlingLoadTest extends Simulation {
     /* Simulation timing and load parameters. */
     val rampUpTimeSecs = 5
     val testTimeSecs = 30
-    val noOfUsers = 100
-    val noOfRequestPerSeconds = 500
+    val noOfUsers = 300
+    val noOfRequestPerSeconds = 1500
 
     val baseURL = "http://localhost:8080"
     val circlesResourcePath = "/circles"

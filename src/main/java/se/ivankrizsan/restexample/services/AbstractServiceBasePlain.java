@@ -61,6 +61,7 @@ public abstract class AbstractServiceBasePlain<E extends LongIdEntity> {
      * @param inEntityId Id of entity to retrieve.
      * @return Found entity, or null if no entity is found.
      */
+    @Transactional(readOnly = true)
     public E find(final Long inEntityId) {
         final E theEntity = mRepository.findOne(inEntityId);
         return theEntity;
@@ -71,6 +72,7 @@ public abstract class AbstractServiceBasePlain<E extends LongIdEntity> {
      *
      * @return List of entities.
      */
+    @Transactional(readOnly = true)
     public List<E> findAll() {
         final List<E> theEntitiesList = mRepository.findAll();
         return theEntitiesList;

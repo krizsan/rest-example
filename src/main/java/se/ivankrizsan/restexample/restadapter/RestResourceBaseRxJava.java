@@ -10,6 +10,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Abstract base class for REST resources exposing operations on an entity type.
@@ -36,7 +37,7 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
     public void getAll(@Suspended final AsyncResponse inAsyncResponse) {
 
         mService.findAll().subscribe(
-            inResult -> inAsyncResponse.resume(Response.ok(inResult).build()),
+            inResult -> inAsyncResponse.resume(Response.ok(entityListToArray(inResult)).build()),
             inError -> inAsyncResponse.resume(
                 Response.
                     status(500).
@@ -150,6 +151,14 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
                     type(MediaType.TEXT_PLAIN_TYPE).
                     build()));
     }
+
+    /**
+     * Creates an array containing the entities in the supplied list.
+     *
+     * @param inEntityList List of entities.
+     * @return Array containing the entities from the list.
+     */
+    protected abstract E[] entityListToArray(final List<E> inEntityList);
 
     public AbstractServiceBaseRxJava<E> getService() {
         return mService;

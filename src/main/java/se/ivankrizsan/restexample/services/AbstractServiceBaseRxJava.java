@@ -79,6 +79,7 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
      * @param inEntityId Id of entity to retrieve.
      * @return Observable that will receive the found entity, or exception if error occurs or no entity is found.
      */
+    @Transactional(readOnly = true)
     public Observable<E> find(final Long inEntityId) {
         return Observable.create(inSource -> {
             try {
@@ -100,6 +101,7 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
      *
      * @return Observable that will receive a list of entities, or exception if error occurs.
      */
+    @Transactional(readOnly = true)
     public Observable<List<E>> findAll() {
         return Observable.create(inSource -> {
             try {

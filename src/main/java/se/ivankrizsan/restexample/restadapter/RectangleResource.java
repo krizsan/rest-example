@@ -17,9 +17,9 @@ import java.util.List;
 @Component
 @Path(RectangleResource.PATH)
 @Produces({MediaType.APPLICATION_JSON})
-public class RectangleResource extends RestResourceBasePlain<Rectangle> {
+public class RectangleResource extends RestResourceBaseRxJava<Rectangle> {
     /* Constant(s): */
-    public final static String PATH = "/rectangle";
+    public final static String PATH = "/rectangles";
 
     /**
      * Creates a REST resource using the supplied service to manipulate entities.

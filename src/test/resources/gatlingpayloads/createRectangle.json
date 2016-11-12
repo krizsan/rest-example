@@ -1,0 +1,10 @@
+{
+  "shapeType": ".Rectangle",
+  "colour": "Colour-${RandomNumber}",
+  "position": {
+    "x": ${RandomNumber}.0,
+    "y": ${RandomNumber}.0
+  },
+  "height": ${RandomNumber},
+  "width": ${RandomNumber}
+}

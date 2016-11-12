@@ -16,5 +16,4 @@ public class RestExampleApplicationTests {
     @Test
     public void contextLoads() {
     }
-
 }

@@ -1,12 +1,10 @@
 package se.ivankrizsan.restexample.services;
 
 import io.reactivex.Observable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -25,8 +23,6 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
 
     /* Instance variable(s): */
     protected JpaRepositoryCustomisations<E> mRepository;
-    @Autowired
-    protected EntityManager mEntityManager;
 
     /**
      * Creates a mService instance that will use the supplied repository for entity persistence.

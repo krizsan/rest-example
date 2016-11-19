@@ -41,11 +41,6 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.reactivex.rxjava2</groupId>
-            <artifactId>rxjava</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
         </dependency>

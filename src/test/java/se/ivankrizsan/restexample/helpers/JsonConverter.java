@@ -21,7 +21,7 @@ public final class JsonConverter {
     }
 
     /**
-     * Creates a JSON representation of supplied object.
+     * Creates a JSON representation of supplied object hierarchy.
      *
      * @param inObjectToSerialize Object to create JSON representation from.
      * @return JSON representation of supplied object.
@@ -31,14 +31,21 @@ public final class JsonConverter {
         throws Exception {
         final ObjectMapper theJsonObjectMapper = createAndConfigureJsonObjectMapper();
         final ObjectWriter theJsonObjectWriter = theJsonObjectMapper.writer();
-        final String theJsonString = theJsonObjectWriter.writeValueAsString(inObjectToSerialize);
+        final String theJsonString =
+            theJsonObjectWriter.writeValueAsString(inObjectToSerialize);
         return theJsonString;
     }
 
     /**
      * Creates an object of supplied type from supplied JSON string.
+     *
+     * @param inJsonRepresentation JSON representation from which to create object(s).
+     * @param inDestinationType Type of the (root) object to create.
+     * @return Object(s) created from JSON representation.
+     * @throws IOException If error occurs creating object(s).
      */
-    public static <T> T jsonToObject(final String inJsonRepresentation, final Class<T> inDestinationType)
+    public static <T> T jsonToObject(final String inJsonRepresentation,
+        final Class<T> inDestinationType)
         throws IOException {
         final ObjectMapper theJsonObjectMapper = createAndConfigureJsonObjectMapper();
         final ObjectReader theJsonObjectReader = theJsonObjectMapper.readerFor(inDestinationType);

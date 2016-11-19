@@ -13,7 +13,8 @@ import se.ivankrizsan.restexample.repositories.RectangleRepository;
 public class RectangleService extends AbstractServiceBaseRxJava<Rectangle> {
 
     /**
-     * Creates a mService instance that will use the supplied repository for entity persistence.
+     * Creates a service instance that will use the supplied repository
+     * for entity persistence.
      *
      * @param inRepository Rectangle repository.
      */

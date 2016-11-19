@@ -5,8 +5,6 @@ import se.ivankrizsan.restexample.domain.Circle;
 import se.ivankrizsan.restexample.services.CircleService;
 
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -16,7 +14,6 @@ import java.util.List;
  */
 @Component
 @Path(CircleResource.PATH)
-@Produces({MediaType.APPLICATION_JSON})
 public class CircleResource extends RestResourceBasePlain<Circle> {
     /* Constant(s): */
     public final static String PATH = "/circles";

@@ -13,7 +13,8 @@ import se.ivankrizsan.restexample.repositories.CircleRepository;
 public class CircleService extends AbstractServiceBasePlain<Circle> {
 
     /**
-     * Creates a mService instance that will use the supplied repository for entity persistence.
+     * Creates a service instance that will use the supplied repository
+     * for entity persistence.
      *
      * @param inRepository Circle repository.
      */

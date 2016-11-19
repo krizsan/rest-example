@@ -3,6 +3,7 @@ package se.ivankrizsan.restexample.restadapter;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -25,6 +26,7 @@ import java.io.IOException;
  *
  * @author Ivan Krizsan
  */
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public abstract class RestResourceTestBase<E extends LongIdEntity> extends
@@ -66,8 +68,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
 
     /**
      * Tests retrieving one entity.
-     * An entity should be retrieved and the properties of the entity should have the same
-     * values as the entity persisted before the test.
+     * An entity should be retrieved and the properties of the entity should have the
+     * same values as the entity persisted before the test.
      *
      * @throws IOException If error occurs. Indicates test failure.
      */
@@ -85,15 +87,17 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             statusCode(200).
             contentType(ContentType.JSON);
 
-        final Object theRetrievedEntity = JsonConverter.jsonToObject(theResponseJson, mExpectedEntity.getClass());
-        ReflectionAssert.assertLenientEquals("Retrieved entity should have the correct property values",
+        final Object theRetrievedEntity = JsonConverter.jsonToObject(
+            theResponseJson, mExpectedEntity.getClass());
+        ReflectionAssert.assertLenientEquals(
+            "Retrieved entity should have the correct property values",
             mExpectedEntity, theRetrievedEntity);
     }
 
     /**
      * Tests deletion of one entity.
-     * This test does not verify deletion of contained entities to which the delete operation
-     * is to be cascaded.
+     * This test does not verify deletion of contained entities
+     * to which the delete operation is to be cascaded.
      * The entity should have been deleted.
      *
      * @throws IOException If error occurs. Indicates test failure.
@@ -107,14 +111,16 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             then().
             statusCode(200);
 
-        final E thePersistedEntityAfterDelete = mEntityRepository.findOne(mExpectedEntity.getId());
-        Assert.assertNull(thePersistedEntityAfterDelete, "Entity should have been deleted");
+        final E thePersistedEntityAfterDelete =
+            mEntityRepository.findOne(mExpectedEntity.getId());
+        Assert.assertNull(thePersistedEntityAfterDelete,
+            "Entity should have been deleted");
     }
 
     /**
      * Tests deletion of all entities.
-     * This test does not verify deletion of contained entities to which the delete operation
-     * is to be cascaded.
+     * This test does not verify deletion of contained entities
+     * to which the delete operation is to be cascaded.
      * All entities should have been deleted.
      *
      * @throws IOException If error occurs. Indicates test failure.
@@ -128,7 +134,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             then().
             statusCode(200);
 
-        final Iterable<E> thePersistedEntitiesAfterDelete = mEntityRepository.findAll();
+        final Iterable<E> thePersistedEntitiesAfterDelete =
+            mEntityRepository.findAll();
         Assert.assertFalse(thePersistedEntitiesAfterDelete.iterator().hasNext(),
             "All entities should have been deleted");
     }
@@ -136,7 +143,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     /**
      * Tests creation of one entity.
      * An entity should be created and the properties of the entity should have the
-     * same values as the properties in the entity representation sent to the service.
+     * same values as the properties in the entity representation sent to
+     * the service.
      *
      * @throws Exception If error occurs. Indicates test failure.
      */
@@ -144,7 +152,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     public void testCreateEntity() throws Exception {
         mEntityRepository.deleteAll();
         final E theExpectedEntity = mEntityFactory.createEntity(1);
-        final String theJsonRepresentation = JsonConverter.objectToJson(theExpectedEntity);
+        final String theJsonRepresentation =
+            JsonConverter.objectToJson(theExpectedEntity);
         final Response theResponse = RestAssured.
             given().
             contentType("application/json").
@@ -159,10 +168,15 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             contentType(ContentType.JSON);
 
         final LongIdEntity theCreatedEntity =
-            JsonConverter.jsonToObject(theCreatedEntityJson, theExpectedEntity.getClass());
-        /* Id will be null in new entity, need to set id so comparision do not fail due to this. */
+            JsonConverter.jsonToObject(
+                theCreatedEntityJson, theExpectedEntity.getClass());
+        /*
+         * Id will be null in new entity, need to set id so comparision
+         * do not fail due to this.
+         */
         theExpectedEntity.setId(theCreatedEntity.getId());
-        ReflectionAssert.assertLenientEquals("Created entity should have the correct property values",
+        ReflectionAssert.assertLenientEquals(
+            "Created entity should have the correct property values",
             theExpectedEntity, theCreatedEntity);
     }
 
@@ -175,9 +189,11 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     @Test(timeOut = TEST_TIMEOUT)
     public void testUpdateEntity() throws Exception {
         final Long theExistingEntityId = mExpectedEntity.getId();
-        final E theExpectedEntity = mEntityFactory.createEntity(mCreateEntityIndex + 1);
+        final E theExpectedEntity =
+            mEntityFactory.createEntity(mCreateEntityIndex + 1);
         theExpectedEntity.setId(theExistingEntityId);
-        final String theJsonRepresentation = JsonConverter.objectToJson(theExpectedEntity);
+        final String theJsonRepresentation =
+            JsonConverter.objectToJson(theExpectedEntity);
         final Response theResponse = RestAssured.
             given().
             contentType("application/json").
@@ -191,8 +207,10 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             statusCode(200).
             contentType(ContentType.JSON);
 
-        final Object theUpdatedEntity = JsonConverter.jsonToObject(theResponseJson, mExpectedEntity.getClass());
-        ReflectionAssert.assertLenientEquals("Updated entity should have the correct property values",
+        final Object theUpdatedEntity = JsonConverter.jsonToObject(
+            theResponseJson, mExpectedEntity.getClass());
+        ReflectionAssert.assertLenientEquals(
+            "Updated entity should have the correct property values",
             theExpectedEntity, theUpdatedEntity);
     }
 
@@ -206,8 +224,10 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     public void testUpdateEntityNotPersisted() throws Exception {
         final long theEntityCountBefore = mEntityRepository.count();
 
-        final E theExpectedEntity = mEntityFactory.createEntity(mCreateEntityIndex + 1);
-        final String theJsonRepresentation = JsonConverter.objectToJson(theExpectedEntity);
+        final E theExpectedEntity =
+            mEntityFactory.createEntity(mCreateEntityIndex + 1);
+        final String theJsonRepresentation =
+            JsonConverter.objectToJson(theExpectedEntity);
         final Response theResponse = RestAssured.
             given().
             contentType("application/json").
@@ -222,6 +242,7 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             contentType(ContentType.TEXT);
 
         final long theEntityCountAfter = mEntityRepository.count();
-        Assert.assertEquals(theEntityCountAfter, theEntityCountBefore, "Number of entities should be unchanged");
+        Assert.assertEquals(theEntityCountAfter, theEntityCountBefore,
+            "Number of entities should be unchanged");
     }
 }

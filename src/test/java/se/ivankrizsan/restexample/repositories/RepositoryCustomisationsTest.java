@@ -12,14 +12,15 @@ import se.ivankrizsan.restexample.helpers.CircleEntityFactory;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
 /**
- * Tests the JPA repository customizations implemented in {@link JpaRepositoryCustomisationsImpl}.
+ * Tests the JPA repository customisations implemented in
+ * {@link JpaRepositoryCustomisationsImpl}.
  *
  * @author Ivan Krizsan
  */
 @SpringBootTest
 @EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
-public class RepositoryCustomizationsTest extends AbstractTestNGSpringContextTests {
+public class RepositoryCustomisationsTest extends AbstractTestNGSpringContextTests {
     /* Constant(s): */
     public final static String UPDATED_COLOUR = "Black 2000";
 
@@ -50,12 +51,13 @@ public class RepositoryCustomizationsTest extends AbstractTestNGSpringContextTes
     public void testPersistNewEntity() throws Exception {
         Circle theCircle = mRepository.persist(mEntity);
         Assert.assertNotNull(theCircle, "The entity should have been persisted");
-        Assert.assertNotNull(theCircle.getId(), "The entity should have been assigned an id");
+        Assert.assertNotNull(theCircle.getId(),
+            "The entity should have been assigned an id");
     }
 
     /**
-     * Tests saving an entity that has not previously been persisted.
-     * Expected outcome: The entity should be persisted and assigned an id.
+     * Tests updating an entity that has been persisted earlier.
+     * Expected outcome: The entity should be updated.
      *
      * @throws Exception If error occurs. Indicates test failure.
      */
@@ -63,7 +65,8 @@ public class RepositoryCustomizationsTest extends AbstractTestNGSpringContextTes
     public void testUpdatePersistedEntity() throws Exception {
         final Circle theCircle = mRepository.persist(mEntity);
         Assert.assertNotNull(theCircle, "The entity should have been persisted");
-        Assert.assertNotNull(theCircle.getId(), "The entity should have been assigned an id");
+        Assert.assertNotNull(theCircle.getId(),
+            "The entity should have been assigned an id");
 
         final Circle theSameCircle = mRepository.findOne(theCircle.getId());
         theSameCircle.setColour(UPDATED_COLOUR);

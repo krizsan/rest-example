@@ -1,7 +1,6 @@
 package se.ivankrizsan.restexample.restadapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.annotations.BeforeMethod;
 import se.ivankrizsan.restexample.domain.Circle;
 import se.ivankrizsan.restexample.helpers.CircleEntityFactory;
@@ -12,7 +11,6 @@ import se.ivankrizsan.restexample.repositories.CircleRepository;
  *
  * @author Ivan Krizsan
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class CircleResourceTest extends RestResourceTestBase<Circle> {
     /* Constant(s): */
 

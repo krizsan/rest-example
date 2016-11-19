@@ -13,7 +13,8 @@ import se.ivankrizsan.restexample.repositories.DrawingRepository;
 public class DrawingService extends AbstractServiceBasePlain<Drawing> {
 
     /**
-     * Creates a mService instance that will use the supplied repository for entity persistence.
+     * Creates a service instance that will use the supplied repository
+     * for entity persistence.
      *
      * @param inRepository Drawing repository.
      */

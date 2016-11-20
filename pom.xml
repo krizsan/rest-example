@@ -87,20 +87,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--
-                Gatling Maven plugin that runs the load-simulation.
-                To perform a load-test, first start the application (RestExampleApplication)
-                and then run the load-tests using mvn gatling:test.
-            -->
-            <plugin>
-                <groupId>io.gatling</groupId>
-                <artifactId>gatling-maven-plugin</artifactId>
-                <version>${gatling-plugin.version}</version>
-                <configuration>
-                    <simulationsFolder>${project.basedir}/src/test/gatling</simulationsFolder>
-                    <bodiesFolder>${project.basedir}/src/test/resources/gatlingpayloads</bodiesFolder>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 

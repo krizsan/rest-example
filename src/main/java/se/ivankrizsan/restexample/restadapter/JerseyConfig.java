@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Jersey configuration.
+ * Cannot rely on classpath scanning, due to a bug in Jersey making it unable
+ * to scan nested JAR-files.
  *
  * @author Ivan Krizsan
  */
@@ -12,7 +14,8 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        /* All resource classes are to be located in the same package as this class. */
-        packages(this.getClass().getPackage().getName());
+        register(CircleResource.class);
+        register(RectangleResource.class);
+        register(DrawingResource.class);
     }
 }

@@ -16,29 +16,30 @@ import java.awt.*;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 /* Need to include type information since there are collections that contain shapes. */
-@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, include = JsonTypeInfo.As.PROPERTY, property = "shapeType")
+@JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS,
+    include = JsonTypeInfo.As.PROPERTY, property = "shapeType")
 public abstract class Shape extends LongIdEntity {
     /* Constant(s): */
 
     /* Instance variable(s): */
     @Column(name = "colour", nullable = false)
-    protected String colour;
+    protected String mColour;
     @Column(name = "position", nullable = false)
-    protected Point position;
+    protected Point mPosition;
 
     public String getColour() {
-        return colour;
+        return mColour;
     }
 
     public void setColour(final String inColour) {
-        colour = inColour;
+        mColour = inColour;
     }
 
     public Point getPosition() {
-        return position;
+        return mPosition;
     }
 
     public void setPosition(final Point inPosition) {
-        position = inPosition;
+        mPosition = inPosition;
     }
 }

@@ -18,6 +18,7 @@ import se.ivankrizsan.restexample.helpers.JsonConverter;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 /**
@@ -111,9 +112,9 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             then().
             statusCode(200);
 
-        final E thePersistedEntityAfterDelete =
-            mEntityRepository.findOne(mExpectedEntity.getId());
-        Assert.assertNull(thePersistedEntityAfterDelete,
+        final Optional<E> thePersistedEntityAfterDeleteOptional =
+            mEntityRepository.findById(mExpectedEntity.getId());
+        Assert.assertFalse(thePersistedEntityAfterDeleteOptional.isPresent(),
             "Entity should have been deleted");
     }
 

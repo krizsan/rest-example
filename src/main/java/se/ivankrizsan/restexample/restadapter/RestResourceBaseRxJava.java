@@ -5,7 +5,14 @@ import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.services.AbstractServiceBaseRxJava;
 
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
@@ -39,11 +46,12 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
         mService.findAll().subscribe(
             inResult -> inAsyncResponse.resume(Response.ok(entityListToArray(inResult)).build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity("An error occurred retrieving all entities: " + inError.getMessage()).
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()));
+                Response
+                    .status(500)
+                    .entity("An error occurred retrieving all entities: "
+                        + inError.getMessage())
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()));
     }
 
     /**
@@ -55,15 +63,16 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
     @DELETE
     @Path("{id}")
     public void deleteEntityById(
-        @Suspended final AsyncResponse inAsyncResponse, @PathParam("id") @NotNull final Long inEntityId) {
+        @Suspended final AsyncResponse inAsyncResponse,
+        @PathParam("id") @NotNull final Long inEntityId) {
         mService.delete(inEntityId).subscribe(
             inResult -> inAsyncResponse.resume(Response.ok().build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity("An error occurred deleting entity with id " + inEntityId).
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()),
+                Response
+                    .status(500)
+                    .entity("An error occurred deleting entity with id " + inEntityId)
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()),
             () -> inAsyncResponse.resume(Response.ok().build()));
     }
 
@@ -78,11 +87,11 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
         mService.deleteAll().subscribe(
             inResult -> inAsyncResponse.resume(Response.ok().build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity("An error occurred deleting all entities.").
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()),
+                Response
+                    .status(500)
+                    .entity("An error occurred deleting all entities.")
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()),
             () -> inAsyncResponse.resume(Response.ok().build()));
     }
 
@@ -94,15 +103,16 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
      */
     @GET
     @Path("{id}")
-    public void getEntityById(@PathParam("id") Long inEntityId, @Suspended final AsyncResponse inAsyncResponse) {
+    public void getEntityById(@PathParam("id") Long inEntityId,
+        @Suspended final AsyncResponse inAsyncResponse) {
         mService.find(inEntityId).subscribe(
             inResult -> inAsyncResponse.resume(Response.ok(inResult).build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity(inError.getMessage()).
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()));
+                Response
+                    .status(500)
+                    .entity(inError.getMessage())
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()));
     }
 
     /**
@@ -121,11 +131,12 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
         mService.update(inEntity).subscribe(
             inResult -> inAsyncResponse.resume(Response.ok(inResult).build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity("An error occurred updating entity with id " + inEntityId + ": " + inError.getMessage()).
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()));
+                Response
+                    .status(500)
+                    .entity("An error occurred updating entity with id "
+                        + inEntityId + ": " + inError.getMessage())
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()));
     }
 
     /**
@@ -138,18 +149,20 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
     public void createEntity(
         @Suspended final AsyncResponse inAsyncResponse, final E inEntity) {
         if (inEntity.getId() != null) {
-            final Response response = Response.status(400).entity("Id must not be set on new entity").build();
+            final Response response =
+                Response.status(400).entity("Id must not be set on new entity").build();
             inAsyncResponse.resume(response);
         }
 
         mService.save(inEntity).subscribe(
             inResult -> inAsyncResponse.resume(Response.ok(inResult).build()),
             inError -> inAsyncResponse.resume(
-                Response.
-                    status(500).
-                    entity("An error occurred creating a new entity: " + inError.getMessage()).
-                    type(MediaType.TEXT_PLAIN_TYPE).
-                    build()));
+                Response
+                    .status(500)
+                    .entity("An error occurred creating a new entity: "
+                        + inError.getMessage())
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .build()));
     }
 
     /**
@@ -158,7 +171,7 @@ public abstract class RestResourceBaseRxJava<E extends LongIdEntity> {
      * @param inEntityList List of entities.
      * @return Array containing the entities from the list.
      */
-    protected abstract E[] entityListToArray(final List<E> inEntityList);
+    protected abstract E[] entityListToArray(List<E> inEntityList);
 
     public AbstractServiceBaseRxJava<E> getService() {
         return mService;

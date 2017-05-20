@@ -15,14 +15,14 @@ public abstract class LongIdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    protected Long id;
+    protected Long mId;
 
     public Long getId() {
-        return id;
+        return mId;
     }
 
     public void setId(final Long inId) {
-        id = inId;
+        mId = inId;
     }
 
     @Override
@@ -36,12 +36,13 @@ public abstract class LongIdEntity {
 
         final LongIdEntity theOtherEntity = (LongIdEntity) inOtherObject;
 
-        return id != null ? id.equals(theOtherEntity.id) : theOtherEntity.id == null;
+        return mId != null
+            ? mId.equals(theOtherEntity.mId) : theOtherEntity.mId == null;
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return mId != null ? mId.hashCode() : 0;
     }
 }

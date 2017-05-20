@@ -17,15 +17,15 @@ public class Drawing extends LongIdEntity {
 
     /* Instance variable(s): */
     @Column(name = "name", nullable = false)
-    protected String name;
+    protected String mName;
     @Column(name = "creationDate", nullable = false)
-    protected Date creationDate;
+    protected Date mCreationDate;
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinTable(
         name = "DrawingShapes",
         joinColumns = {@JoinColumn(name = "drawing_id")},
         inverseJoinColumns = {@JoinColumn(name = "shape_id")})
-    protected Set<Shape> shapes = new HashSet<>();
+    protected Set<Shape> mShapes = new HashSet<>();
 
     /**
      * Adds the supplied shape to the drawing.
@@ -33,30 +33,30 @@ public class Drawing extends LongIdEntity {
      * @param inShape Shape to add to drawing.
      */
     public void addShape(final Shape inShape) {
-        shapes.add(inShape);
+        mShapes.add(inShape);
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(final String inName) {
-        name = inName;
+        mName = inName;
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return mCreationDate;
     }
 
     public void setCreationDate(final Date inCreationDate) {
-        creationDate = inCreationDate;
+        mCreationDate = inCreationDate;
     }
 
     public Set<Shape> getShapes() {
-        return shapes;
+        return mShapes;
     }
 
     public void setShapes(final Set<Shape> inShapes) {
-        shapes = inShapes;
+        mShapes = inShapes;
     }
 }

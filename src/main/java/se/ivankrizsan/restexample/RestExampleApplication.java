@@ -19,7 +19,12 @@ import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustom
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public class RestExampleApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(RestExampleApplication.class, args);
+    /**
+     * Application main entrypoint.
+     *
+     * @param inArgs Command line arguments.
+     */
+    public static void main(String[] inArgs) {
+        SpringApplication.run(RestExampleApplication.class, inArgs);
     }
 }

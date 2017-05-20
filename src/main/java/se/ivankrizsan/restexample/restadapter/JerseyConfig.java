@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JerseyConfig extends ResourceConfig {
 
+    /**
+     * Default constructor.
+     * Registers the REST resource classes.
+     */
     public JerseyConfig() {
         register(CircleResource.class);
         register(RectangleResource.class);

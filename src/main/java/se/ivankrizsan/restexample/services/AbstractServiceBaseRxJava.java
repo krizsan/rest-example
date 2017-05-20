@@ -6,8 +6,7 @@ import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Optional;
 
 /**
  * Abstract base class for services that has operations for creating, reading,
@@ -25,7 +24,7 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
     protected JpaRepositoryCustomisations<E> mRepository;
 
     /**
-     * Creates a mService instance that will use the supplied repository for entity persistence.
+     * Creates a service instance that will use the supplied repository for entity persistence.
      *
      * @param inRepository Entity repository.
      */
@@ -73,15 +72,16 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
      * Finds the entity having supplied id.
      *
      * @param inEntityId Id of entity to retrieve.
-     * @return Observable that will receive the found entity, or exception if error occurs or no entity is found.
+     * @return Observable that will receive the found entity, or exception if
+     * error occurs or no entity is found.
      */
     @Transactional(readOnly = true)
     public Observable<E> find(final Long inEntityId) {
         return Observable.create(inSource -> {
             try {
-                final E theEntity = mRepository.findOne(inEntityId);
-                if (theEntity != null) {
-                    inSource.onNext(theEntity);
+                final Optional<E> theEntityOptional = mRepository.findById(inEntityId);
+                if (theEntityOptional.isPresent()) {
+                    inSource.onNext(theEntityOptional.get());
                     inSource.onComplete();
                 } else {
                     inSource.onError(new Error("Cannot find entity with id " + inEntityId));
@@ -101,8 +101,7 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
     public Observable<List<E>> findAll() {
         return Observable.create(inSource -> {
             try {
-                final List<E> theEntitiesList = StreamSupport.stream(mRepository.findAll().spliterator(), false)
-                    .collect(Collectors.toList());
+                final List<E> theEntitiesList = mRepository.findAll();
                 inSource.onNext(theEntitiesList);
                 inSource.onComplete();
             } catch (final Exception theException) {
@@ -120,7 +119,7 @@ public abstract class AbstractServiceBaseRxJava<E extends LongIdEntity> {
     public Observable delete(final Long inId) {
         return Observable.create(inSource -> {
             try {
-                mRepository.delete(inId);
+                mRepository.deleteById(inId);
                 inSource.onComplete();
             } catch (final Exception theException) {
                 inSource.onError(theException);

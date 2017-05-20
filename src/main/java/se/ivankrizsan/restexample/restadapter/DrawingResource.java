@@ -19,7 +19,7 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public class DrawingResource extends RestResourceBaseRxJava<Drawing> {
     /* Constant(s): */
-    public final static String PATH = "/drawings";
+    public static final String PATH = "/drawings";
 
     /**
      * Creates a REST resource using the supplied service to manipulate entities.

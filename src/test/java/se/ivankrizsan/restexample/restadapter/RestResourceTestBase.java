@@ -18,6 +18,7 @@ import se.ivankrizsan.restexample.helpers.JsonConverter;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 /**
@@ -25,6 +26,7 @@ import java.io.IOException;
  * Only JSON representation is used in the tests.
  *
  * @author Ivan Krizsan
+ * @param <E> Type of entity which REST resource to test.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
@@ -75,17 +77,17 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
      */
     @Test(timeOut = TEST_TIMEOUT)
     public void testGetEntity() throws IOException {
-        final Response theResponse = RestAssured.
-            given().
-            contentType("application/json").
-            accept("application/json").
-            when().
-            get(mResourceUrlPath + "/" + mExpectedEntity.getId());
+        final Response theResponse = RestAssured
+            .given()
+            .contentType("application/json")
+            .accept("application/json")
+            .when()
+            .get(mResourceUrlPath + "/" + mExpectedEntity.getId());
         final String theResponseJson = theResponse.prettyPrint();
-        theResponse.
-            then().
-            statusCode(200).
-            contentType(ContentType.JSON);
+        theResponse
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON);
 
         final Object theRetrievedEntity = JsonConverter.jsonToObject(
             theResponseJson, mExpectedEntity.getClass());
@@ -104,16 +106,16 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
      */
     @Test(timeOut = TEST_TIMEOUT)
     public void testDeleteEntity() throws IOException {
-        RestAssured.
-            given().
-            when().
-            delete(mResourceUrlPath + "/" + mExpectedEntity.getId()).
-            then().
-            statusCode(200);
+        RestAssured
+            .given()
+            .when()
+            .delete(mResourceUrlPath + "/" + mExpectedEntity.getId())
+            .then()
+            .statusCode(200);
 
-        final E thePersistedEntityAfterDelete =
-            mEntityRepository.findOne(mExpectedEntity.getId());
-        Assert.assertNull(thePersistedEntityAfterDelete,
+        final Optional<E> thePersistedEntityAfterDeleteOptional =
+            mEntityRepository.findById(mExpectedEntity.getId());
+        Assert.assertFalse(thePersistedEntityAfterDeleteOptional.isPresent(),
             "Entity should have been deleted");
     }
 
@@ -127,12 +129,12 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
      */
     @Test(timeOut = TEST_TIMEOUT)
     public void testDeleteAllEntities() throws IOException {
-        RestAssured.
-            given().
-            when().
-            delete(mResourceUrlPath).
-            then().
-            statusCode(200);
+        RestAssured
+            .given()
+            .when()
+            .delete(mResourceUrlPath)
+            .then()
+            .statusCode(200);
 
         final Iterable<E> thePersistedEntitiesAfterDelete =
             mEntityRepository.findAll();
@@ -154,18 +156,18 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
         final E theExpectedEntity = mEntityFactory.createEntity(1);
         final String theJsonRepresentation =
             JsonConverter.objectToJson(theExpectedEntity);
-        final Response theResponse = RestAssured.
-            given().
-            contentType("application/json").
-            accept("application/json").
-            body(theJsonRepresentation).
-            when().
-            post(mResourceUrlPath);
+        final Response theResponse = RestAssured
+            .given()
+            .contentType("application/json")
+            .accept("application/json")
+            .body(theJsonRepresentation)
+            .when()
+            .post(mResourceUrlPath);
         final String theCreatedEntityJson = theResponse.prettyPrint();
-        theResponse.
-            then().
-            statusCode(200).
-            contentType(ContentType.JSON);
+        theResponse
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON);
 
         final LongIdEntity theCreatedEntity =
             JsonConverter.jsonToObject(
@@ -194,18 +196,18 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
         theExpectedEntity.setId(theExistingEntityId);
         final String theJsonRepresentation =
             JsonConverter.objectToJson(theExpectedEntity);
-        final Response theResponse = RestAssured.
-            given().
-            contentType("application/json").
-            accept("application/json").
-            body(theJsonRepresentation).
-            when().
-            put(mResourceUrlPath + "/" + mExpectedEntity.getId());
+        final Response theResponse = RestAssured
+            .given()
+            .contentType("application/json")
+            .accept("application/json")
+            .body(theJsonRepresentation)
+            .when()
+            .put(mResourceUrlPath + "/" + mExpectedEntity.getId());
         final String theResponseJson = theResponse.prettyPrint();
-        theResponse.
-            then().
-            statusCode(200).
-            contentType(ContentType.JSON);
+        theResponse
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON);
 
         final Object theUpdatedEntity = JsonConverter.jsonToObject(
             theResponseJson, mExpectedEntity.getClass());
@@ -228,18 +230,18 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
             mEntityFactory.createEntity(mCreateEntityIndex + 1);
         final String theJsonRepresentation =
             JsonConverter.objectToJson(theExpectedEntity);
-        final Response theResponse = RestAssured.
-            given().
-            contentType("application/json").
-            accept("application/json").
-            body(theJsonRepresentation).
-            when().
-            put(mResourceUrlPath + "/" + mExpectedEntity.getId() + 1);
+        final Response theResponse = RestAssured
+            .given()
+            .contentType("application/json")
+            .accept("application/json")
+            .body(theJsonRepresentation)
+            .when()
+            .put(mResourceUrlPath + "/" + mExpectedEntity.getId() + 1);
 
-        theResponse.
-            then().
-            statusCode(500).
-            contentType(ContentType.TEXT);
+        theResponse
+            .then()
+            .statusCode(500)
+            .contentType(ContentType.TEXT);
 
         final long theEntityCountAfter = mEntityRepository.count();
         Assert.assertEquals(theEntityCountAfter, theEntityCountBefore,

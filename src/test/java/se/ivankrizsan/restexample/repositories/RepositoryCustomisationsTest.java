@@ -22,7 +22,7 @@ import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustom
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public class RepositoryCustomisationsTest extends AbstractTestNGSpringContextTests {
     /* Constant(s): */
-    public final static String UPDATED_COLOUR = "Black 2000";
+    public static final String UPDATED_COLOUR = "Black 2000";
 
     /* Instance variable(s): */
     @Autowired

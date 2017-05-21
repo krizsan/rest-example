@@ -46,7 +46,8 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
      * @param inEntityType Entity type.
      * @param inEntityManager Entity manager.
      */
-    public JpaRepositoryCustomisationsImpl(final Class<T> inEntityType, final EntityManager inEntityManager) {
+    public JpaRepositoryCustomisationsImpl(final Class<T> inEntityType,
+        final EntityManager inEntityManager) {
         super(inEntityType, inEntityManager);
         mEntityManager = inEntityManager;
     }
@@ -56,7 +57,7 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
     public T persist(final T inEntity) {
         T theSavedEntity = inEntity;
         final Long theEntityId = ((LongIdEntity) theSavedEntity).getId();
-        if ((theEntityId != null) && exists(theEntityId)) {
+        if ((theEntityId != null) && existsById(theEntityId)) {
             theSavedEntity = mEntityManager.merge(inEntity);
         } else {
             mEntityManager.persist(inEntity);

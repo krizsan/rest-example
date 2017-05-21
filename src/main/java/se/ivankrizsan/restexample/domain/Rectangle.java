@@ -11,14 +11,14 @@ import javax.persistence.Entity;
 @Entity(name = "Rectangle")
 public class Rectangle extends Shape {
     /* Constant(s): */
-    public final static int DEFAULT_WIDTH = 10;
-    public final static int DEFAULT_HEIGHT = 10;
+    public static final int DEFAULT_WIDTH = 10;
+    public static final int DEFAULT_HEIGHT = 10;
 
     /* Instance variable(s): */
     @Column(name = "height", nullable = false)
-    protected int height = DEFAULT_HEIGHT;
+    protected int mHeight = DEFAULT_HEIGHT;
     @Column(name = "width", nullable = false)
-    protected int width = DEFAULT_WIDTH;
+    protected int mWidth = DEFAULT_WIDTH;
 
     /**
      * Default constructor.
@@ -33,23 +33,23 @@ public class Rectangle extends Shape {
      * @param inWidth Width of new rectangle.
      */
     public Rectangle(final int inHeight, final int inWidth) {
-        height = inHeight;
-        width = inWidth;
+        mHeight = inHeight;
+        mWidth = inWidth;
     }
 
     public int getHeight() {
-        return height;
+        return mHeight;
     }
 
     public void setHeight(final int inHeight) {
-        height = inHeight;
+        mHeight = inHeight;
     }
 
     public int getWidth() {
-        return width;
+        return mWidth;
     }
 
     public void setWidth(final int inWidth) {
-        width = inWidth;
+        mWidth = inWidth;
     }
 }

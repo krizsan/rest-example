@@ -5,6 +5,7 @@ import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Abstract base class for services that has operations for creating, reading,
@@ -60,8 +61,8 @@ public abstract class AbstractServiceBasePlain<E extends LongIdEntity> {
      * @return Found entity, or null if no entity is found.
      */
     @Transactional(readOnly = true)
-    public E find(final Long inEntityId) {
-        final E theEntity = mRepository.findOne(inEntityId);
+    public Optional<E> find(final Long inEntityId) {
+        final Optional<E> theEntity = mRepository.findById(inEntityId);
         return theEntity;
     }
 
@@ -82,7 +83,7 @@ public abstract class AbstractServiceBasePlain<E extends LongIdEntity> {
      * @param inId Id of entity to delete.
      */
     public void delete(final Long inId) {
-        mRepository.delete(inId);
+        mRepository.deleteById(inId);
     }
 
     /**

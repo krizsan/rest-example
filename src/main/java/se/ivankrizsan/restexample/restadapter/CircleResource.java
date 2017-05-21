@@ -16,7 +16,7 @@ import java.util.List;
 @Path(CircleResource.PATH)
 public class CircleResource extends RestResourceBasePlain<Circle> {
     /* Constant(s): */
-    public final static String PATH = "/circles";
+    public static final String PATH = "/circles";
 
     /**
      * Creates a REST resource using the supplied service to manipulate entities.

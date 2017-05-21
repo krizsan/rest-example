@@ -22,7 +22,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring.version>5.0.0.M3</spring.version>
+        <spring.version>5.0.0.RC1</spring.version>
+        <testng.version>6.11</testng.version>
+        <rest-assured.version>3.0.3</rest-assured.version>
+        <unitils.version>3.4.6</unitils.version>
     </properties>
 
     <dependencies>
@@ -47,19 +50,19 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.9.13.6</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>3.0.1</version>
+            <version>${rest-assured.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.unitils</groupId>
             <artifactId>unitils-core</artifactId>
-            <version>3.4.3</version>
+            <version>${unitils.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

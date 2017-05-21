@@ -6,6 +6,7 @@ package se.ivankrizsan.restexample.helpers;
  * The id of entities created by an entity factory is never set.
  *
  * @author Ivan Krizsan
+ * @param <E> Type of entity the factory will created.
  */
 public interface EntityFactory<E> {
     /**
@@ -16,5 +17,5 @@ public interface EntityFactory<E> {
      * @param inIndex Index for property values.
      * @return New entity instance.
      */
-    E createEntity(final int inIndex);
+    E createEntity(int inIndex);
 }

@@ -3,11 +3,13 @@ package se.ivankrizsan.restexample.restadapter;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.services.AbstractServiceBasePlain;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -94,8 +96,11 @@ public abstract class RestResourceBasePlain<E extends LongIdEntity> {
     public Response getEntityById(@PathParam("id") Long inEntityId) {
         return performServiceOperation(
             () -> {
-                final E theEntity = mService.find(inEntityId);
-                return Response.ok(theEntity).build();
+                final Optional<E> theEntityOptional = mService.find(inEntityId);
+                if (!theEntityOptional.isPresent()) {
+                    throw new EntityNotFoundException();
+                }
+                return Response.ok(theEntityOptional.get()).build();
             },
             500, "An error occurred finding entity with id " + inEntityId + ": "
         );
@@ -111,14 +116,16 @@ public abstract class RestResourceBasePlain<E extends LongIdEntity> {
      */
     @PUT
     @Path("{id}")
-    public Response updateEntity(final E inEntity, @PathParam("id") @NotNull final Long inEntityId) {
+    public Response updateEntity(final E inEntity,
+        @PathParam("id") @NotNull final Long inEntityId) {
         final Response theResponse = performServiceOperation(
             () -> {
                 inEntity.setId(inEntityId);
                 final E theEntity = mService.update(inEntity);
                 return Response.ok(theEntity).build();
             },
-            500, "An error occurred updating entity with id " + inEntityId + ": "
+            500, "An error occurred updating entity with id "
+                + inEntityId + ": "
         );
         return theResponse;
     }
@@ -137,7 +144,8 @@ public abstract class RestResourceBasePlain<E extends LongIdEntity> {
             () -> {
                 Response theResponse;
                 if (inEntity.getId() != null) {
-                    theResponse = Response.status(400).entity("Id must not be set on new entity").build();
+                    theResponse = Response.status(400).entity(
+                        "Id must not be set on new entity").build();
                 } else {
                     final E theEntity = mService.save(inEntity);
                     theResponse = Response.ok(theEntity).build();
@@ -167,11 +175,11 @@ public abstract class RestResourceBasePlain<E extends LongIdEntity> {
         try {
             theResponse = inResponseSupplier.get();
         } catch (final Throwable theException) {
-            theResponse = Response.
-                status(inErrorHttpStatus).
-                entity(inErrorMessage + theException.getMessage()).
-                type(MediaType.TEXT_PLAIN_TYPE).
-                build();
+            theResponse = Response
+                .status(inErrorHttpStatus)
+                .entity(inErrorMessage + theException.getMessage())
+                .type(MediaType.TEXT_PLAIN_TYPE)
+                .build();
         }
         return theResponse;
     }
@@ -182,7 +190,7 @@ public abstract class RestResourceBasePlain<E extends LongIdEntity> {
      * @param inEntityList List of entities.
      * @return Array containing the entities from the list.
      */
-    protected abstract E[] entityListToArray(final List<E> inEntityList);
+    protected abstract E[] entityListToArray(List<E> inEntityList);
 
     public AbstractServiceBasePlain<E> getService() {
         return mService;

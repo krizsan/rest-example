@@ -11,6 +11,8 @@ import se.ivankrizsan.restexample.domain.Circle;
 import se.ivankrizsan.restexample.helpers.CircleEntityFactory;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
+import java.util.Optional;
+
 /**
  * Tests the JPA repository customisations implemented in
  * {@link JpaRepositoryCustomisationsImpl}.
@@ -68,12 +70,15 @@ public class RepositoryCustomisationsTest extends AbstractTestNGSpringContextTes
         Assert.assertNotNull(theCircle.getId(),
             "The entity should have been assigned an id");
 
-        final Circle theSameCircle = mRepository.findOne(theCircle.getId());
-        theSameCircle.setColour(UPDATED_COLOUR);
-        mRepository.persist(theSameCircle);
-        final Circle theUpdatedCircle = mRepository.findOne(theCircle.getId());
-        Assert.assertNotNull(theUpdatedCircle, "The updated entity should exist");
-        Assert.assertEquals(theUpdatedCircle.getColour(), UPDATED_COLOUR,
+        final Optional<Circle> theSameCircleOption =
+            mRepository.findById(theCircle.getId());
+        theSameCircleOption.get().setColour(UPDATED_COLOUR);
+        mRepository.persist(theSameCircleOption.get());
+        final Optional<Circle> theUpdatedCircleOption =
+            mRepository.findById(theCircle.getId());
+        Assert.assertTrue(theUpdatedCircleOption.isPresent(),
+            "The updated entity should exist");
+        Assert.assertEquals(theUpdatedCircleOption.get().getColour(), UPDATED_COLOUR,
             "The property in the entity should have been updated");
     }
 }

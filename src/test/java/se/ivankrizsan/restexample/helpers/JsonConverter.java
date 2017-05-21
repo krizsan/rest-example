@@ -41,6 +41,7 @@ public final class JsonConverter {
      *
      * @param inJsonRepresentation JSON representation from which to create object(s).
      * @param inDestinationType Type of the (root) object to create.
+     * @param <T> Destination type.
      * @return Object(s) created from JSON representation.
      * @throws IOException If error occurs creating object(s).
      */

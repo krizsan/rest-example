@@ -20,7 +20,7 @@ import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustom
 public class RestExampleApplication {
 
     /**
-     * Application main entrypoint.
+     * Application main entry-point.
      *
      * @param inArgs Command line arguments.
      */

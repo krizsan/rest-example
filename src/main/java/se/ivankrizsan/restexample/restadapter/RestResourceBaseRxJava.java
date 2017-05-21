@@ -1,6 +1,5 @@
 package se.ivankrizsan.restexample.restadapter;
 
-
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.services.AbstractServiceBaseRxJava;
 

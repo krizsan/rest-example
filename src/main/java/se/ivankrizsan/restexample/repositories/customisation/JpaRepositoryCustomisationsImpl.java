@@ -2,6 +2,7 @@ package se.ivankrizsan.restexample.repositories.customisation;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
  * @param <T> Entity type.
  * @author Ivan Krizsan
  */
+@NoRepositoryBean
 public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, Long> implements
     JpaRepositoryCustomisations<T> {
     /* Constant(s): */

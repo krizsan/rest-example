@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/krizsan/rest-example.svg?style=svg)](https://circleci.com/gh/krizsan/rest-example)
+
 # REST-Example
 Example RESTful web service implemented with Spring Boot, JAX-RS and RxJava.
 This is the version with asynchronous JAX-RS server-side request processing and with RxJava.

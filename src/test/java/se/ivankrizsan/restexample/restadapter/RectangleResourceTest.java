@@ -1,6 +1,7 @@
 package se.ivankrizsan.restexample.restadapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.testng.annotations.BeforeMethod;
 import se.ivankrizsan.restexample.domain.Rectangle;
 import se.ivankrizsan.restexample.helpers.RectangleEntityFactory;
@@ -11,6 +12,7 @@ import se.ivankrizsan.restexample.repositories.RectangleRepository;
  *
  * @author Ivan Krizsan
  */
+@EnableAutoConfiguration
 public class RectangleResourceTest extends RestResourceTestBase<Rectangle> {
     /* Constant(s): */
 

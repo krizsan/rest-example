@@ -1,6 +1,7 @@
 package se.ivankrizsan.restexample.restadapter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.testng.annotations.BeforeMethod;
 import se.ivankrizsan.restexample.domain.Drawing;
 import se.ivankrizsan.restexample.helpers.DrawingEntityFactory;
@@ -11,6 +12,7 @@ import se.ivankrizsan.restexample.repositories.DrawingRepository;
  *
  * @author Ivan Krizsan
  */
+@EnableAutoConfiguration
 public class DrawingResourceTest extends RestResourceTestBase<Drawing> {
     /* Constant(s): */
 

@@ -3,6 +3,7 @@ package se.ivankrizsan.restexample.restadapter;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
@@ -18,18 +19,19 @@ import se.ivankrizsan.restexample.helpers.JsonConverter;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisationsImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-
 
 /**
  * Abstract base class for tests of REST resources.
  * Only JSON representation is used in the tests.
  *
- * @author Ivan Krizsan
  * @param <E> Type of entity which REST resource to test.
+ * @author Ivan Krizsan
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
+@EnableJpaRepositories(basePackages = { "se.ivankrizsan.restexample.repositories" },
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     AbstractTestNGSpringContextTests {
@@ -97,15 +99,47 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     }
 
     /**
+     * Tests retrieving all entities.
+     * Multiple entities should be retrieved and the properties of each entity should have the
+     * same values as the entities persisted before the test.
+     */
+    @Test(timeOut = TEST_TIMEOUT)
+    public void testGetAllEntities() {
+        /* Delete all entities in the database as this test will set up its own entities. */
+        mEntityRepository.deleteAll();
+
+        /* Create multiple test entities. */
+        final List<E> theExpectedEntities = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            final E theEntity = mEntityFactory.createEntity(i);
+            final E theExpectedEntity = mEntityRepository.save(theEntity);
+            theExpectedEntities.add(theExpectedEntity);
+        }
+
+        final Response theResponse = RestAssured
+            .given()
+            .contentType("application/json")
+            .accept("application/json")
+            .when()
+            .get(mResourceUrlPath);
+        final String theResponseJson = theResponse.prettyPrint();
+        theResponse
+            .then()
+            .statusCode(200)
+            .contentType(ContentType.JSON);
+
+        final int theShapeCount = StringUtils.countMatches(theResponseJson, "id");
+        Assert.assertTrue(theShapeCount > 1, "Multiple entities should have been retrieved");
+    }
+
+    /**
      * Tests deletion of one entity.
      * This test does not verify deletion of contained entities
      * to which the delete operation is to be cascaded.
      * The entity should have been deleted.
-     *
-     * @throws IOException If error occurs. Indicates test failure.
      */
     @Test(timeOut = TEST_TIMEOUT)
-    public void testDeleteEntity() throws IOException {
+    public void testDeleteEntity() {
         RestAssured
             .given()
             .when()
@@ -124,11 +158,9 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
      * This test does not verify deletion of contained entities
      * to which the delete operation is to be cascaded.
      * All entities should have been deleted.
-     *
-     * @throws IOException If error occurs. Indicates test failure.
      */
     @Test(timeOut = TEST_TIMEOUT)
-    public void testDeleteAllEntities() throws IOException {
+    public void testDeleteAllEntities() {
         RestAssured
             .given()
             .when()
@@ -138,7 +170,8 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
 
         final Iterable<E> thePersistedEntitiesAfterDelete =
             mEntityRepository.findAll();
-        Assert.assertFalse(thePersistedEntitiesAfterDelete.iterator().hasNext(),
+        Assert.assertFalse(thePersistedEntitiesAfterDelete.iterator()
+                .hasNext(),
             "All entities should have been deleted");
     }
 
@@ -156,6 +189,7 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
         final E theExpectedEntity = mEntityFactory.createEntity(1);
         final String theJsonRepresentation =
             JsonConverter.objectToJson(theExpectedEntity);
+
         final Response theResponse = RestAssured
             .given()
             .contentType("application/json")
@@ -240,8 +274,7 @@ public abstract class RestResourceTestBase<E extends LongIdEntity> extends
 
         theResponse
             .then()
-            .statusCode(500)
-            .contentType(ContentType.TEXT);
+            .statusCode(500);
 
         final long theEntityCountAfter = mEntityRepository.count();
         Assert.assertEquals(theEntityCountAfter, theEntityCountBefore,

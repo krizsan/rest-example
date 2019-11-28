@@ -1,12 +1,11 @@
 package se.ivankrizsan.restexample.restadapter;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 import se.ivankrizsan.restexample.domain.Rectangle;
 import se.ivankrizsan.restexample.services.RectangleService;
 
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -15,9 +14,8 @@ import java.util.List;
  * @author Ivan Krizsan
  */
 @Component
-@Path(RectangleResource.PATH)
-@Produces({MediaType.APPLICATION_JSON})
-public class RectangleResource extends RestResourceBaseRxJava<Rectangle> {
+@RequestMapping(path = RectangleResource.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RectangleResource extends RestResourceBaseReactor<Rectangle> {
     /* Constant(s): */
     public static final String PATH = "/rectangles";
 
@@ -32,6 +30,6 @@ public class RectangleResource extends RestResourceBaseRxJava<Rectangle> {
 
     @Override
     protected Rectangle[] entityListToArray(final List<Rectangle> inEntityList) {
-        return inEntityList.toArray(new Rectangle[inEntityList.size()]);
+        return inEntityList.toArray(new Rectangle[0]);
     }
 }

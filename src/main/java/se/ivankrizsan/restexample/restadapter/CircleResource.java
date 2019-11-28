@@ -1,10 +1,10 @@
 package se.ivankrizsan.restexample.restadapter;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 import se.ivankrizsan.restexample.domain.Circle;
 import se.ivankrizsan.restexample.services.CircleService;
 
-import javax.ws.rs.Path;
 import java.util.List;
 
 /**
@@ -13,8 +13,8 @@ import java.util.List;
  * @author Ivan Krizsan
  */
 @Component
-@Path(CircleResource.PATH)
-public class CircleResource extends RestResourceBaseRxJava<Circle> {
+@RequestMapping(path = CircleResource.PATH)
+public class CircleResource extends RestResourceBaseReactor<Circle> {
     /* Constant(s): */
     public static final String PATH = "/circles";
 
@@ -29,6 +29,6 @@ public class CircleResource extends RestResourceBaseRxJava<Circle> {
 
     @Override
     protected Circle[] entityListToArray(final List<Circle> inEntityList) {
-        return inEntityList.toArray(new Circle[inEntityList.size()]);
+        return inEntityList.toArray(new Circle[0]);
     }
 }

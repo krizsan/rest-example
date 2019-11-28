@@ -10,7 +10,7 @@ import se.ivankrizsan.restexample.repositories.DrawingRepository;
  * @author Ivan Krizsan
  */
 @Service
-public class DrawingService extends AbstractServiceBaseRxJava<Drawing> {
+public class DrawingService extends AbstractServiceBaseReactor<Drawing> {
 
     /**
      * Creates a service instance that will use the supplied repository

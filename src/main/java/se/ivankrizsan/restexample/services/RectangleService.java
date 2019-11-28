@@ -10,7 +10,7 @@ import se.ivankrizsan.restexample.repositories.RectangleRepository;
  * @author Ivan Krizsan
  */
 @Service
-public class RectangleService extends AbstractServiceBaseRxJava<Rectangle> {
+public class RectangleService extends AbstractServiceBaseReactor<Rectangle> {
 
     /**
      * Creates a service instance that will use the supplied repository

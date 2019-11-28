@@ -10,7 +10,7 @@ import se.ivankrizsan.restexample.repositories.CircleRepository;
  * @author Ivan Krizsan
  */
 @Service
-public class CircleService extends AbstractServiceBaseRxJava<Circle> {
+public class CircleService extends AbstractServiceBaseReactor<Circle> {
 
     /**
      * Creates a service instance that will use the supplied repository

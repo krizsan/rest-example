@@ -39,4 +39,19 @@ public class Circle extends Shape {
     public void setRadius(final int inRadius) {
         mRadius = inRadius;
     }
+
+    @Override
+    public String toString() {
+        final String sb = "Circle{" + "mRadius="
+            + mRadius
+            + ", mColour='"
+            + mColour
+            + '\''
+            + ", mPosition="
+            + mPosition
+            + ", mId="
+            + mId
+            + '}';
+        return sb;
+    }
 }

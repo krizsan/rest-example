@@ -29,7 +29,7 @@ class GatlingLoadTest extends Simulation {
     object CreateRectangle {
         val request = exec(http("CreateRectangle")
             .post(rectanglesResourcePath)
-            .body(ElFileBody("createRectangle.json")).asJSON
+            .body(ElFileBody("createRectangle.json")).asJson
             .check(status.is(HttpURLConnection.HTTP_OK)))
     }
 
@@ -37,7 +37,7 @@ class GatlingLoadTest extends Simulation {
     object CreateCircle {
         val request = exec(http("CreateCirlce")
             .post(circlesResourcePath)
-            .body(ElFileBody("createCircle.json")).asJSON
+            .body(ElFileBody("createCircle.json")).asJson
             .check(status.is(HttpURLConnection.HTTP_OK)))
     }
 
@@ -45,7 +45,7 @@ class GatlingLoadTest extends Simulation {
     object CreateDrawing {
         val request = exec(http("CreateDrawing")
             .post(drawingsResourcePath)
-            .body(ElFileBody("createDrawing.json")).asJSON
+            .body(ElFileBody("createDrawing.json")).asJson
             .check(status.is(HttpURLConnection.HTTP_OK)))
     }
 
@@ -79,7 +79,7 @@ class GatlingLoadTest extends Simulation {
     )
 
     val httpProtocol = http
-        .baseURL(baseURL)
+        .baseUrl(baseURL)
         .acceptHeader("application/json")
         .userAgentHeader("Gatling")
 

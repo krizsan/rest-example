@@ -6,6 +6,10 @@ import reactor.core.publisher.Mono;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.repositories.customisation.JpaRepositoryCustomisations;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Abstract base class for services that has operations for creating, reading,
  * updating and deleting entities.
@@ -37,7 +41,14 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
      * @return Mono that will receive the saved entity, or exception if error occurs.
      */
     public Mono<E> save(final E inEntity) {
-        return Mono.just(mRepository.save(inEntity));
+        return Mono.create(theMonoSink -> {
+            try {
+                final E theSavedEntity = mRepository.save(inEntity);
+                theMonoSink.success(theSavedEntity);
+            } catch (final Throwable theException) {
+                theMonoSink.error(theException);
+            }
+        });
     }
 
     /**
@@ -47,46 +58,90 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
      * @return Mono that will receive the updated entity, or exception if error occurs.
      */
     public Mono<E> update(final E inEntity) {
-        return Mono.just(mRepository.persist(inEntity));
+        return Mono.create(theMonoSink -> {
+            try {
+                final E theSavedEntity = mRepository.persist(inEntity);
+                theMonoSink.success(theSavedEntity);
+            } catch (final Throwable theException) {
+                theMonoSink.error(theException);
+            }
+        });
     }
 
     /**
      * Finds the entity having supplied id.
      *
      * @param inEntityId Id of entity to retrieve.
-     * @return Mono that will receive the found entity, or exception if error occurs or no entity is found.
+     * @return Mono that will receive the found entity or error if error occurs or no
+     * entity with supplied id is found.
      */
     @Transactional(readOnly = true)
     public Mono<E> find(final Long inEntityId) {
-        return Mono.justOrEmpty(mRepository.findById(inEntityId));
+        return Mono.create(theMonoSink -> {
+            try {
+                final Optional<E> theFoundEntity = mRepository.findById(inEntityId);
+                if (theFoundEntity.isPresent()) {
+                    theMonoSink.success(theFoundEntity.get());
+                } else {
+                    theMonoSink.error(
+                        new EntityNotFoundException("Entity with id " + inEntityId + " not found"));
+                }
+            } catch (final Throwable theException) {
+                theMonoSink.error(theException);
+            }
+        });
     }
 
     /**
      * Finds all the entities.
      *
-     * @return Flux that will receive the found entities, or exception if error occurs.
+     * @return Flux that will receive the found entities or error.
      */
     @Transactional(readOnly = true)
     public Flux<E> findAll() {
-        return Flux.fromIterable(mRepository.findAll());
+        return Flux.create(theFluxSink -> {
+            try {
+                final List<E> theAllEntities = mRepository.findAll();
+                for (final E theEntity : theAllEntities) {
+                    theFluxSink.next(theEntity);
+                }
+                theFluxSink.complete();
+            } catch (final Throwable theException) {
+                theFluxSink.error(theException);
+            }
+        });
     }
 
     /**
      * Deletes the entity having supplied id.
      *
-     * @param inId Id of entity to delete.
-     * @return Mono that will receive completion, or exception if error occurs.
+     * @param inEntityId Id of entity to delete.
+     * @return Mono that will receive completion or error.
      */
-    public Mono<Void> delete(final Long inId) {
-        return Mono.fromRunnable(() -> mRepository.deleteById(inId));
+    public Mono<Void> delete(final Long inEntityId) {
+        return Mono.create(theMonoSink -> {
+            try {
+                mRepository.deleteById(inEntityId);
+                theMonoSink.success();
+            } catch (final Throwable theException) {
+                theMonoSink.error(theException);
+            }
+        });
     }
 
     /**
      * Deletes all entities.
      *
-     * @return Observable that will receive completion, or exception if error occurs.
+     * @return Mono that will receive completion or error.
      */
     public Mono<Void> deleteAll() {
-        return Mono.fromRunnable(() -> mRepository.deleteAll());
+        return Mono.create(theMonoSink -> {
+            try {
+                mRepository.deleteAll();
+                theMonoSink.success();
+            } catch (final Throwable theException) {
+                theMonoSink.error(theException);
+            }
+        });
     }
 }

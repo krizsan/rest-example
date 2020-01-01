@@ -1,5 +1,7 @@
 package se.ivankrizsan.restexample.restadapter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ import java.util.List;
 @RestController
 public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
     /* Constant(s): */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestResourceBaseReactor.class);
 
     /* Instance variable(s): */
     protected AbstractServiceBaseReactor<E> mService;
@@ -47,6 +50,8 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
     @DeleteMapping(path = "{id}", produces = "application/json;charset=UTF-8")
     public Mono<Void> deleteEntityById(
         @PathVariable("id") @NotNull final Long inEntityId) {
+        LOGGER.info("Received request to delete entity with id {}", inEntityId);
+
         return mService.delete(inEntityId);
     }
 
@@ -58,6 +63,8 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
      */
     @DeleteMapping(produces = "application/json;charset=UTF-8")
     public Mono<Void> deleteAllEntities() {
+        LOGGER.info("Received request to delete all entities.");
+
         return mService.deleteAll();
     }
 
@@ -69,6 +76,8 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
      */
     @GetMapping(path = "{id}", produces = "application/json;charset=UTF-8")
     public Mono<E> getEntityById(@PathVariable("id") final Long inEntityId) {
+        LOGGER.info("Received request to retrieve entity with id {}", inEntityId);
+
         return mService.find(inEntityId);
     }
 
@@ -85,6 +94,8 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
         consumes = "application/json")
     public Mono<E> updateEntity(@RequestBody final E inEntity,
         @PathVariable("id") @NotNull final Long inEntityId) {
+        LOGGER.info("Received request to update entity with id {}", inEntityId);
+
         inEntity.setId(inEntityId);
         return mService.update(inEntity);
     }
@@ -98,6 +109,8 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
         produces = "application/json;charset=UTF-8",
         consumes = "application/json")
     public Mono<E> createEntity(@RequestBody final E inEntity) {
+        LOGGER.info("Received request to create a new entity: {}", inEntity);
+
         if (inEntity.getId() != null) {
             throw new IllegalArgumentException("A new entity must not have an id");
         }

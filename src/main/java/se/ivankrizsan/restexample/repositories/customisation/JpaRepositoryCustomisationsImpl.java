@@ -1,5 +1,7 @@
 package se.ivankrizsan.restexample.repositories.customisation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -22,6 +24,7 @@ import javax.persistence.EntityManager;
 public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, Long> implements
     JpaRepositoryCustomisations<T> {
     /* Constant(s): */
+    private static final Logger LOGGER = LoggerFactory.getLogger(JpaRepositoryCustomisationsImpl.class);
 
     /* Instance variable(s): */
     protected EntityManager mEntityManager;
@@ -59,9 +62,15 @@ public class JpaRepositoryCustomisationsImpl<T> extends SimpleJpaRepository<T, L
     public T persist(final T inEntity) {
         T theSavedEntity = inEntity;
         final Long theEntityId = ((LongIdEntity) theSavedEntity).getId();
+
+        LOGGER.info("Persisting entity: {}", inEntity);
+        LOGGER.info("Entity has id: '{}'", theEntityId);
+
         if ((theEntityId != null) && existsById(theEntityId)) {
+            LOGGER.info("Entity has id and exists - merging.");
             theSavedEntity = mEntityManager.merge(inEntity);
         } else {
+            LOGGER.info("Entity has no id or has not previously been persisted - persisting.");
             mEntityManager.persist(inEntity);
         }
         mEntityManager.flush();

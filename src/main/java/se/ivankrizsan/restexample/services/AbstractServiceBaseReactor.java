@@ -1,5 +1,7 @@
 package se.ivankrizsan.restexample.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Transactional
 public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     /* Constant(s): */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractServiceBaseReactor.class);
 
     /* Instance variable(s): */
     protected JpaRepositoryCustomisations<E> mRepository;
@@ -43,6 +46,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Mono<E> save(final E inEntity) {
         return Mono.create(theMonoSink -> {
             try {
+                LOGGER.info("Saving entity: {}", inEntity);
+
                 final E theSavedEntity = mRepository.save(inEntity);
                 theMonoSink.success(theSavedEntity);
             } catch (final Throwable theException) {
@@ -60,6 +65,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Mono<E> update(final E inEntity) {
         return Mono.create(theMonoSink -> {
             try {
+                LOGGER.info("Updating entity: {}", inEntity);
+
                 final E theSavedEntity = mRepository.persist(inEntity);
                 theMonoSink.success(theSavedEntity);
             } catch (final Throwable theException) {
@@ -79,6 +86,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Mono<E> find(final Long inEntityId) {
         return Mono.create(theMonoSink -> {
             try {
+                LOGGER.info("Retrieving entity with id {}", inEntityId);
+
                 final Optional<E> theFoundEntity = mRepository.findById(inEntityId);
                 if (theFoundEntity.isPresent()) {
                     theMonoSink.success(theFoundEntity.get());
@@ -101,6 +110,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Flux<E> findAll() {
         return Flux.create(theFluxSink -> {
             try {
+                LOGGER.info("Retrieving all entities.");
+
                 final List<E> theAllEntities = mRepository.findAll();
                 for (final E theEntity : theAllEntities) {
                     theFluxSink.next(theEntity);
@@ -121,6 +132,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Mono<Void> delete(final Long inEntityId) {
         return Mono.create(theMonoSink -> {
             try {
+                LOGGER.info("Deleting entity with id {}", inEntityId);
+
                 mRepository.deleteById(inEntityId);
                 theMonoSink.success();
             } catch (final Throwable theException) {
@@ -137,6 +150,8 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
     public Mono<Void> deleteAll() {
         return Mono.create(theMonoSink -> {
             try {
+                LOGGER.info("Deleting all entities.");
+
                 mRepository.deleteAll();
                 theMonoSink.success();
             } catch (final Throwable theException) {

@@ -13,4 +13,5 @@ https://www.ivankrizsan.se/2016/11/25/rest-with-asynchronous-jersey-and-rxjava-p
 https://www.ivankrizsan.se/2016/12/17/rest-with-asynchronous-jersey-and-rxjava-part-3/<br/>
 https://www.ivankrizsan.se/2016/12/29/rest-with-asynchronous-jersey-and-rxjava-part-4/<br/>
 
-Note that these articles do not cover the Spring WebFlux and Reactor version.
+The Spring WebFlux and Reactor version is covered in this article:<br/>
+https://www.ivankrizsan.se/2019/12/08/rest-with-spring-webflux-and-reactor/

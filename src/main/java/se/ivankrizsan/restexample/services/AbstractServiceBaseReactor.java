@@ -58,7 +58,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theMonoSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
     /**
@@ -78,7 +78,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theMonoSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theMonoSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
     /**
@@ -128,7 +128,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theFluxSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
     /**
@@ -148,7 +148,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theMonoSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 
     /**
@@ -167,6 +167,6 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
                 theMonoSink.error(theException);
             }
         })
-            .subscribeOn(Schedulers.parallel());
+            .subscribeOn(Schedulers.boundedElastic());
     }
 }

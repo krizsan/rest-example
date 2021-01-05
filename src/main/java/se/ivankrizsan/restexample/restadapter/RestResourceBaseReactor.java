@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 import se.ivankrizsan.restexample.domain.LongIdEntity;
 import se.ivankrizsan.restexample.services.AbstractServiceBaseReactor;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
      */
     @DeleteMapping(path = "{id}", produces = "application/json;charset=UTF-8")
     public Mono<Void> deleteEntityById(
-        @PathVariable("id") @NotNull final Long inEntityId) {
+        @PathVariable("id") final Long inEntityId) {
         LOGGER.info("Received request to delete entity with id {}", inEntityId);
 
         return mService.delete(inEntityId);
@@ -93,7 +92,7 @@ public abstract class RestResourceBaseReactor<E extends LongIdEntity> {
         produces = "application/json;charset=UTF-8",
         consumes = "application/json")
     public Mono<E> updateEntity(@RequestBody final E inEntity,
-        @PathVariable("id") @NotNull final Long inEntityId) {
+        @PathVariable("id") final Long inEntityId) {
         LOGGER.info("Received request to update entity with id {}", inEntityId);
 
         inEntity.setId(inEntityId);

@@ -15,3 +15,12 @@ https://www.ivankrizsan.se/2016/12/29/rest-with-asynchronous-jersey-and-rxjava-p
 
 The Spring WebFlux and Reactor version is covered in this article:<br/>
 https://www.ivankrizsan.se/2019/12/08/rest-with-spring-webflux-and-reactor/
+
+## Metrics with Prometheus
+To view metrics of the application in Prometheus, do the following: 
+- Edit the prometheys.yml configuration file and insert the IP address of the computer on which
+the rest-example application is running.
+- Start Prometheus by entering ./prometheus.sh in the terminal.
+- Open the URL http://localhost:9090 in a browser.
+- To view both the custom diskspace metrics, use the expression "{__name__=~".*_disk_space_bytes"}" without quotes.
+

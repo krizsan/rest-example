@@ -20,7 +20,5 @@ https://www.ivankrizsan.se/2019/12/08/rest-with-spring-webflux-and-reactor/
 To view metrics of the application in Prometheus, do the following: 
 - Edit the prometheys.yml configuration file and insert the IP address of the computer on which
 the rest-example application is running.
-- Start Prometheus by entering ./prometheus.sh in the terminal.
+- Start Prometheus and Prometheus Alertmanager by entering docker-compose up in the terminal.
 - Open the URL http://localhost:9090 in a browser.
-- To view both the custom diskspace metrics, use the expression "{__name__=~".*_disk_space_bytes"}" without quotes.
-

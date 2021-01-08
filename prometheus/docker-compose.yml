@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+    - 9090:9090
+    command: [
+      "--config.file=/etc/prometheus/config/prometheus.yml",
+      "--storage.tsdb.path=/prometheus",
+      "--web.console.libraries=/usr/share/prometheus/console_libraries",
+      "--web.console.templates=/usr/share/prometheus/consoles",
+      "--web.enable-lifecycle"
+    ]
+    volumes:
+    - "./config/:/etc/prometheus/config/"
+    - "./rules/:/etc/prometheus/rules/"
+    networks:
+      - prometheusnet
+
+  alert-manager:
+    image: prom/alertmanager:latest
+    depends_on:
+      - prometheus
+    ports:
+      - 9093:9093
+    networks:
+      - prometheusnet
+
+networks:
+  prometheusnet:

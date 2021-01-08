@@ -1,0 +1,10 @@
+groups:
+  - name: example-group
+    rules:
+      - alert: DiskspaceLow
+        expr: remaining_disk_space_percent > 58.2
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          description: "Diskspace is low!"

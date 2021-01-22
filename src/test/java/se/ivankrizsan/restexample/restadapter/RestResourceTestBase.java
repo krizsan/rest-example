@@ -31,7 +31,7 @@ import java.util.Optional;
  * @author Ivan Krizsan
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@EnableJpaRepositories(basePackages = { "se.ivankrizsan.restexample.repositories" },
+@EnableJpaRepositories(basePackages = {"se.ivankrizsan.restexample.repositories"},
     repositoryBaseClass = JpaRepositoryCustomisationsImpl.class)
 public abstract class RestResourceTestBase<E extends LongIdEntity> extends
     AbstractTestNGSpringContextTests {

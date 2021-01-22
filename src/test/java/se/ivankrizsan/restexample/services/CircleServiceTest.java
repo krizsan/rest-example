@@ -27,7 +27,6 @@ import java.util.Optional;
  *
  * @author Ivan Krizsan
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = CircleServiceTestConfiguration.class)
 @ActiveProfiles("serviceTests")

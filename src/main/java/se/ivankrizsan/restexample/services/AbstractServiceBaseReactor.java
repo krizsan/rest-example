@@ -90,7 +90,7 @@ public abstract class AbstractServiceBaseReactor<E extends LongIdEntity> {
      */
     @Transactional(readOnly = true)
     public Mono<E> find(final Long inEntityId) {
-        return Mono.create((Consumer<MonoSink<E>>)  theMonoSink -> {
+        return Mono.create((Consumer<MonoSink<E>>) theMonoSink -> {
             try {
                 LOGGER.info("Retrieving entity with id {}", inEntityId);
 

@@ -5,8 +5,8 @@ package se.ivankrizsan.restexample.helpers;
  * to create instances of entities.
  * The id of entities created by an entity factory is never set.
  *
- * @author Ivan Krizsan
  * @param <E> Type of entity the factory will created.
+ * @author Ivan Krizsan
  */
 public interface EntityFactory<E> {
     /**

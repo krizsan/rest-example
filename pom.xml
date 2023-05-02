@@ -22,7 +22,7 @@
         <java.version>11</java.version>
         <gatling.version>3.3.1</gatling.version>
         <gatling-plugin.version>3.0.5</gatling-plugin.version>
-        <testng.version>7.0.0</testng.version>
+        <testng.version>7.7.0</testng.version>
         <rest-assured.version>4.1.2</rest-assured.version>
         <unitils.version>3.4.6</unitils.version>
     </properties>
